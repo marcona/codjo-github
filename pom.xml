@@ -64,6 +64,7 @@
             <artifactId>codjo-test-common</artifactId>
             <scope>test</scope>
         </dependency>
+
         <!-- github core api -->
         <dependency>
             <groupId>org.eclipse.mylyn.github</groupId>
@@ -77,9 +78,30 @@
             <version>2.1</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--  JETTY DEPENDENCIES FOR TESTING  -->
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-management</artifactId>
+            <version>${jetty.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <properties>
+         <jetty.version>6.1.25</jetty.version>
         <!--
            <smtpMockServer>localhost</smtpMockServer>
            <smtpMockPort>89</smtpMockPort>

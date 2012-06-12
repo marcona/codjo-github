@@ -1,7 +1,9 @@
 package net.codjo.pyp;
+import java.net.Authenticator;
+import java.net.PasswordAuthentication;
 import net.codjo.pyp.pages.BrinEditPage;
 import net.codjo.pyp.pages.HomePage;
-import net.codjo.pyp.services.BrinService;
+import net.codjo.pyp.services.GithubServiceAgi;
 import net.codjo.pyp.services.PropertyLoader;
 import org.apache.wicket.Application;
 import org.apache.wicket.Page;
@@ -15,7 +17,7 @@ import org.apache.wicket.request.target.coding.HybridUrlCodingStrategy;
  */
 public class PypApplication extends WebApplication {
     private PropertyLoader loader;
-    private final BrinService brinService;
+    private final GithubServiceAgi brinService;
 
 
     @Override
@@ -25,8 +27,10 @@ public class PypApplication extends WebApplication {
 
 
     public PypApplication(String propertyFilePath) {
+        setProxyAuthentication();
+
         loader = new PropertyLoader(propertyFilePath);
-        brinService = new BrinService(loader.getRepositoryFilePath());
+        brinService = new GithubServiceAgi();
     }
 
 
@@ -68,7 +72,27 @@ public class PypApplication extends WebApplication {
     }
 
 
-    public BrinService getBrinService() {
+    public GithubServiceAgi getBrinService() {
         return brinService;
+    }
+
+
+    private void setProxyAuthentication() {
+        System.setProperty("http.proxyHost", "ehttp1");
+        System.setProperty("http.proxyPort", "80");
+        System.setProperty("https.proxyHost", "ehttp1");
+        System.setProperty("https.proxyPort", "80");
+
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            public PasswordAuthentication getPasswordAuthentication() {
+                if (getRequestorType() == RequestorType.PROXY) {
+                    return new PasswordAuthentication("GROUPE\\MARCONA", "XXXXXX".toCharArray());
+                }
+                else {
+                    return super.getPasswordAuthentication();
+                }
+            }
+        });
     }
 }

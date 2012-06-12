@@ -39,7 +39,7 @@ public class BrinService {
 
 
     public static BrinService getBrinService(Component wicketComponent) {
-        return ((PypApplication)wicketComponent.getApplication()).getBrinService();
+        return null;
     }
 
 

@@ -1,22 +1,22 @@
 package net.codjo.pyp.pages;
-import net.codjo.pyp.ExternalImage;
-import net.codjo.pyp.model.Brin;
-import net.codjo.pyp.services.BrinService;
-import net.codjo.pyp.services.CsvService;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import net.codjo.pyp.model.Brin;
+import net.codjo.pyp.services.BrinService;
+import net.codjo.pyp.services.CsvService;
+import net.codjo.pyp.services.GithubServiceAgi;
 import org.apache.wicket.PageParameters;
-import org.apache.wicket.ajax.AjaxEventBehavior;
-import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.panel.EmptyPanel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.markup.repeater.data.DataView;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.request.target.resource.ResourceStreamRequestTarget;
 import org.apache.wicket.util.resource.StringResourceStream;
+import org.eclipse.egit.github.core.PullRequest;
 /**
  *
  */
@@ -25,37 +25,49 @@ public class HomePage extends RootPage {
 
 
     public HomePage() {
-        BrinService service = BrinService.getBrinService(this);
+        GithubServiceAgi service = GithubServiceAgi.getGithubService(this);
 
-        add(new DataView<Brin>("brinList", new ListDataProvider<Brin>(service.getAllBrins())) {
-            @Override
-            protected void populateItem(Item<Brin> listItem) {
-                final Brin brin = listItem.getModelObject();
-                listItem.add(new Label("title", brin.getTitle()));
-                listItem.add(new Label("creationDate", formatDate(brin.getCreationDate())));
-                listItem.add(new Label("status", brin.getStatus().toString()));
+        try {
+            add(new DataView<PullRequest>("brinList",
+                                          new ListDataProvider<PullRequest>(service.buildPullRequestList())) {
+                @Override
+                protected void populateItem(Item<PullRequest> listItem) {
+                    final PullRequest brin = listItem.getModelObject();
+                    listItem.add(new Label("project", "Project to be filled "));
+                    listItem.add(new Label("title", brin.getTitle()));
+                    listItem.add(new Label("creationDate", formatDate(brin.getCreatedAt())));
+                    listItem.add(new Label("status", brin.getState().toString()));
 
-                Link editionLink = new Link("editBrin") {
-                    @Override
-                    public void onClick() {
-                        responseWithEdit(brin, false);
-                    }
-                };
-                editionLink.add(new ExternalImage("editBrinLogo", "images/brin_form_edit.png"));
-                listItem.add(editionLink);
-                listItem.add(new AjaxEventBehavior("ondblclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        responseWithEdit(brin, false);
-                    }
-                });
-            }
-        });
+/*
+                    Link editionLink = new Link("editBrin") {
+                        @Override
+                        public void onClick() {
+                            responseWithEdit(brin, false);
+                        }
+                    };
+                    editionLink.add(new ExternalImage("editBrinLogo", "images/brin_form_edit.png"));
+                    listItem.add(editionLink);
+                    listItem.add(new AjaxEventBehavior("ondblclick") {
+                        @Override
+                        protected void onEvent(AjaxRequestTarget target) {
+                            responseWithEdit(brin, false);
+                        }
+                    });
+*/
+                }
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();  // Todo
+        }
     }
 
 
     @Override
     protected void initRightPanel(String id) {
+        add(new EmptyPanel(id));  
+/*
+
         CallBack buttonCallBack = new CallBack() {
             public void onClickCallBack(Brin brin) {
                 responseWithEdit(brin, true);
@@ -94,13 +106,15 @@ public class HomePage extends RootPage {
         };
 
         add(new RightPanel(id, buttonCallBack, exportCallBack));
+*/
     }
 
 
     @Override
     protected void initLeftPanel(String id) {
-        BrinService service = BrinService.getBrinService(this);
-        add(new LeftPanel(id, service.calculateBrinNumber(service.getAllBrins())));
+//        BrinService service = BrinService.getBrinService(this);
+//        add(new LeftPanel(id, service.calculateBrinNumber(service.getAllBrins())));
+        add(new EmptyPanel(id));
     }
 
 
