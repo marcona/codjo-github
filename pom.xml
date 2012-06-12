@@ -1,0 +1,247 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!--
+    | POM Relationships
+    -->
+    <groupId>net.codjo.github</groupId>
+    <artifactId>codjo-github</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- START SNIPPET: super-pom -->
+    <parent>
+        <groupId>net.codjo.pom</groupId>
+        <artifactId>codjo-pom-application</artifactId>
+        <version>SNAPSHOT</version>
+    </parent>
+    <!-- END SNIPPET: super-pom -->
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.wicket</groupId>
+            <artifactId>wicket-extensions</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.codjo.confluence</groupId>
+            <artifactId>codjo-confluence</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>net.codjo.agent</groupId>
+                    <artifactId>codjo-agent</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.codjo.util</groupId>
+            <artifactId>codjo-util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>xstream</groupId>
+            <artifactId>xstream</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.codjo.test</groupId>
+            <artifactId>codjo-test-common</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- github core api -->
+        <dependency>
+            <groupId>org.eclipse.mylyn.github</groupId>
+            <artifactId>org.eclipse.egit.github.core</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.1</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
+    <properties>
+        <!--
+           <smtpMockServer>localhost</smtpMockServer>
+           <smtpMockPort>89</smtpMockPort>
+
+           <confluenceTestUrl>http://wd-confluence/confluence</confluenceTestUrl>
+           <confluenceTestUser>user_dev</confluenceTestUser>
+           <confluenceTestPassword>user_dev</confluenceTestPassword>
+           <confluenceTestSpaceKey>sandbox</confluenceTestSpaceKey>
+           <confluenceTestPage>SendAnnouncementForBrin</confluenceTestPage>
+           <confluenceManualTestPage>SendAnnouncementForBrinManualTest</confluenceManualTestPage>
+           <repositoryTestFilePath>target/pyp/pypRpository.xml</repositoryTestFilePath>
+
+           <mailDomain>@allianz.fr</mailDomain>
+        -->
+    </properties>
+
+    <name>codjo-github</name>
+    <description>Application d'aide a la manipulation de github</description>
+
+    <packaging>war</packaging>
+    <build>
+        <finalName>github</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <!--
+                        this configuration avoid an annoying console message
+                        - web.xml is already packaged elsewhere -
+                    -->
+                    <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>server-developer</id>
+            <activation>
+                <property>
+                    <name>!server</name>
+                </property>
+            </activation>
+            <properties>
+                <application.environmentMode>development</application.environmentMode>
+                <!--
+                                <smtpServer>${smtpMockServer}</smtpServer>
+                                <smtpPort>${smtpMockPort}</smtpPort>
+                                <mailDomain>@allianz.fr</mailDomain>
+
+                                <confluenceUrl>${confluenceTestUrl}</confluenceUrl>
+                                <confluenceUser>${confluenceTestUser}</confluenceUser>
+                                <confluencePassword>${confluenceTestPassword}</confluencePassword>
+                                <confluenceSpaceKey>${confluenceTestSpaceKey}</confluenceSpaceKey>
+                                <confluencePage>${confluenceManualTestPage}</confluencePage>
+                                <confluenceUnitPage>${confluenceTestPage}</confluenceUnitPage>
+                                <repositoryFilePath>${repositoryTestFilePath}</repositoryFilePath>
+                -->
+                <warDeploymentPath>C:\\dev\\user\\temp\\pyp</warDeploymentPath>
+            </properties>
+        </profile>
+        <profile>
+            <id>server-integration</id>
+            <activation>
+                <property>
+                    <name>server</name>
+                    <value>integration</value>
+                </property>
+            </activation>
+            <properties>
+                <application.environmentMode>deployment</application.environmentMode>
+                <!--
+                                <smtpServer>smtpecon</smtpServer>
+                                <smtpPort>25</smtpPort>
+                                <mailDomain>@allianz.fr</mailDomain>
+
+                                <confluenceUrl>http://wp-confluence/confluence</confluenceUrl>
+                                <confluenceUser>amdsidev</confluenceUser>
+                                <confluencePassword>amdsidev</confluencePassword>
+                                <confluenceSpaceKey>swdev</confluenceSpaceKey>
+                                <confluencePage>Destinataire equipe java</confluencePage>
+                                <confluenceUnitPage>${confluenceTestPage}</confluenceUnitPage>
+                                <repositoryFilePath>Z:\\equipes\\equipe-transverse\\pyp\\repository\\pypRpository.xml</repositoryFilePath>
+                -->
+                <warDeploymentPath>D:\\dev\user\\pyp</warDeploymentPath>
+            </properties>
+        </profile>
+        <profile>
+            <id>deploy-on-wp-sic</id>
+            <activation>
+                <property>
+                    <name>process</name>
+                    <value>integration</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.jcraft</groupId>
+                                <artifactId>jsch</artifactId>
+                                <version>0.1.27</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>ant</groupId>
+                                <artifactId>ant-jsch</artifactId>
+                                <version>1.7.0</version>
+                                <exclusions>
+                                    <exclusion>
+                                        <groupId>org.apache.ant</groupId>
+                                        <artifactId>ant</artifactId>
+                                    </exclusion>
+                                </exclusions>
+                            </dependency>
+                            <dependency>
+                                <groupId>commons-net</groupId>
+                                <artifactId>commons-net</artifactId>
+                                <version>1.4.1</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>ant</groupId>
+                                <artifactId>ant-commons-net</artifactId>
+                                <version>1.6.5</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>ant</groupId>
+                                <artifactId>ant-nodeps</artifactId>
+                                <version>1.6.5</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <id>deploy-jnlp</id>
+                                <phase>install</phase>
+                                <configuration>
+                                    <tasks>
+                                        <scp todir="DEV4D@wp-documentation:/cygdrive/d/Dev/platform/tools/tomcat/tomcat-6.0.18/webapps/"
+                                             keyfile="Z:\maven\keys\repository-key.openssh" passphrase="">
+                                            <fileset dir="${project.basedir}/target">
+                                                <include
+                                                      name="pyp.${pom.packaging}"/>
+                                            </fileset>
+                                        </scp>
+                                    </tasks>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+    <scm>
+        <connection>scm:git:https://github.com/marcona/codjo-github.git</connection>
+        <developerConnection>scm:git:https://github.com/marcona/codjo-github.git</developerConnection>
+        <url>https://github.com/marcona/codjo-github</url>
+    </scm>
+</project>

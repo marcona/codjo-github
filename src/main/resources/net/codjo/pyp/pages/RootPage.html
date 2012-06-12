@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <title wicket:id="title">Title</title>
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico"/>
+    <link rel="icon" type="image/png" href="images/logo_magic.png"/>
+</head>
+<body>
+<div id="page">
+    <div id="header">
+        <img src="images/logo_allianz.png" alt="Allianz Global Investors France"/>
+
+        <div id="projectLabel">PostYourProblem</div>
+    </div>
+
+    <span wicket:id="topMenu"/>
+
+    <div wicket:id="leftPanel" id="leftPanel" class="menu sidePanel">
+        <!--
+                <ul>
+                    <li class="external"><a
+                          href="https://ldapbv.intradit.net/adsbv-online/pages/AdsbvOnline.jsp?content=/adsbv-online/pages/actions/roles/ChangePermissions/init.do"
+                          target="_blank">Habilitation IT</a>
+                    </li>
+                    <li class="external"><a href="http://europeanintranet.am.agf.fr/fr"
+                                            target="_blank">Intranet AGI France</a></li>
+                    <li class="external"><a
+                          href="http://wp-mantis/login_page.php?return=%2Fview_all_bug_page.php"
+                          target="_blank">Gestion de bug</a>
+                    </li>
+                </ul>
+        -->
+    </div>
+
+    <div id="content">
+        <div id="realContent">
+            <wicket:child/>
+
+            <br clear="all">
+        </div>
+
+        <p id="footer">
+            <b>P</b>ost<b>Y</b>our<b>P</b>roblem <span wicket:id="version">VERSION</span> &copy; AllianzGi france
+            |
+            <a href="mailto:segolene.galabert@allianzgi.fr">Contact / Bug / Feature request</a>
+            |
+            <a wicket:id="documentationLink" target="_blank">DOCUMENTATION_LINK</a>
+        </p>
+    </div>
+
+
+    <span wicket:id="rightPanel"/>
+
+</div>
+</body>
+</html>

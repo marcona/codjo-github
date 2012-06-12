@@ -1,0 +1,5 @@
+A web app to ease github integration
+
+Provides:
+ - a cool GUI to list all the openend codjo pull request
+ - an OAuthProvider

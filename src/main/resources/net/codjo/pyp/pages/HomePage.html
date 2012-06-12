@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en">
+<body>
+<wicket:extend>
+    <table class="brinTable" id="background-image">
+        <thead>
+        <tr>
+            <th style="width:65%">Title</th>
+            <th style="width:20%">Creation</th>
+            <th style="width:10%">Status</th>
+            <th style="width:5%"></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr wicket:id="brinList">
+            <td><span wicket:id="title">[title]</span></td>
+            <td><span wicket:id="creationDate">[creationDate]</span></td>
+            <td><span wicket:id="status">[status]</span></td>
+            <td><a wicket:id="editBrin">
+                <img wicket:id="editBrinLogo" class="logo" alt="Edition"/>
+            </a></td>
+        </tr>
+        </tbody>
+    </table>
+</wicket:extend>
+</body>
+</html>

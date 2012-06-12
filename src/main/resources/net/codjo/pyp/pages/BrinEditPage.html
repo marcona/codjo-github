@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en" lang="en">
+<body>
+<wicket:extend>
+    <form id="brinForm" wicket:id="brinForm" class="brinForm">
+        <div id="brinStatus" class="brinStatus">
+            <span>  Status </span><select type="text" wicket:id="status"/>
+        </div>
+        <fieldset class="fieldSet">
+            <legend>
+                <span>Creation</span>
+            </legend>
+            <span>Title </span><input wicket:id="title" size="76"/>
+
+            <div id="creationDate" class="inputDate">
+                <span>Date </span><input type="text" wicket:id="creationDate" size="7"/>
+            </div>
+
+            <div id="brinDescription" class="brinDescription">
+                <br>
+                <textarea wicket:id="description" rows="6" cols="40">Input comes here</textarea>
+
+                <wicket:container wicket:id="affectedTeams">
+                    <table class="affectedTeams">
+                        <tr wicket:id="teams">
+                            <td><input type="checkbox" wicket:id="check"/></td>
+                            <td><label wicket:id="team"></label></td>
+                        </tr>
+                    </table>
+                </wicket:container>
+
+            </div>
+        </fieldset>
+
+        <fieldset class="fieldSet">
+            <legend>
+                <span>Unblocking</span>
+            </legend>
+            <div id="unblockingDate" class="inputDate">
+                <span>Date </span><input type="text" wicket:id="unblockingDate" size="7"/>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <wicket:container wicket:id="unblockingType">
+                            <table>
+                                <tr>
+                                    <td wicket:id="radios">
+                                        <input type="radio" wicket:id="radio"/>
+                                        <label wicket:id="type"></label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </wicket:container>
+                    </td>
+                </tr>
+            </table>
+            <div id="unblocking" class="brinDescription">
+                <textarea wicket:id="unblockingDescription" rows="4" cols="90">Input comes here</textarea><br>
+            </div>
+        </fieldset>
+        <fieldset class="fieldSet">
+            <legend>
+                <span>RootCause</span>
+            </legend>
+            <div id="rootCause" class="brinDescription">
+                <br><textarea wicket:id="rootCause" rows="4" cols="90">Input comes here</textarea><br>
+            </div>
+        </fieldset>
+        <!--<button wicket:id="save" class="boutonSave">Save</button>-->
+        <a wicket:id="save" class="boutonSave">
+            <img src="images/filesaveas.png" alt="">
+        </a>
+    </form>
+    <div wicket:id="feedback" class="feedbackPanel">TO BE FILLED BY WICKET</div>
+</wicket:extend>
+</body>
+</html>

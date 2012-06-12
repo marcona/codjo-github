@@ -1,0 +1,631 @@
+body {
+    font-family: verdana, Arial, Helvetica, sans-serif;
+    margin: 0;
+    color: #000000;
+    font-size: 11px;
+    background: #fff url(../images/bg_body.png) repeat-x;
+}
+
+ul, dl {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li, dd, dt {
+    padding: 0;
+    margin: 0;
+}
+
+h1, h2, h3, h4 {
+    color: #113388;
+}
+
+a {
+    color: #113388;
+}
+
+a:visited {
+    color: #113388;
+}
+
+#page {
+    width: 986px;
+    padding-right: 25px;
+}
+
+#header {
+    height: 94px;
+}
+
+#header img {
+    position: absolute;
+    top: 11px;
+}
+
+#header #projectLabel {
+    height: 20px;
+    float: right;
+    padding-top: 76px;
+
+    color: #fff;
+    font-size: 120%;
+    font-weight: bold;
+}
+
+.menu ul {
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*list-style: none;*/
+}
+
+.menu ul li {
+    /*height: 22px;*/
+}
+
+.menu li a, em {
+    display: block;
+    padding: 4px 15px;
+    font-size: 100%;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    height: 14px;
+}
+
+.menu li a:hover, em {
+    /*background-color: #426bb3;*/
+    font-style: normal;
+}
+
+#topMenu-level1 {
+    height: 22px;
+    margin: 2px 0 0 164px;
+}
+
+#topMenu-level2 {
+    height: 22px;
+    margin: 2px 0 0 164px;
+}
+
+#topMenu-level1 li {
+    float: left; /*vertical-align: middle;*/
+}
+
+#topMenu-level1 li em {
+    background-color: #426bb3;
+}
+
+#topMenu-level2 li {
+    float: left; /*vertical-align: middle;*/
+}
+
+#topMenu-level2 li a:hover, em {
+    background-color: #819CCC;
+}
+
+.sidePanel {
+    width: 162px;
+    float: left;
+    min-height: 1px;
+}
+
+#leftPanel {
+    margin-top: 70px;
+}
+
+#leftPanel li a {
+    padding: 4px 7px;
+}
+
+#leftPanel li.internal a {
+    background-color: #426BB3;
+}
+
+#leftPanel li.internal a:hover {
+    background-color: #819CCC;
+}
+
+#leftPanel li.external a {
+    border-bottom: 1px solid #DEDFE0;
+    color: #4A494A;
+}
+
+#leftPanel li.external a:hover {
+    background-color: #DEDFE0;
+}
+
+#rightPanel {
+    margin-top: 70px; /* background-color: #E5ECF6;*/
+    text-align: right;
+}
+
+#rightPanel h3 {
+    margin: 0;
+    padding: 3px 7px;
+    color: #ffffff;
+    background-color: #113388;
+}
+
+#rightPanel li a {
+    text-decoration: underline;
+    color: #4A494A;
+    font-weight: normal;
+}
+
+#rightPanel  img.logo {
+    border: none;
+    margin-top: 10px;
+}
+
+#applicationsSeparator {
+    margin-top: 30px;
+    border-top: 1px dotted #426bb3;
+    padding-top: 4px;
+    padding-left: 7px;
+    padding-right: 7px;
+    color: #113388;
+    font-weight: bold;
+}
+
+#footer {
+    border-top: 1px dotted #426bb3;
+    padding: 4px 7px;
+    margin-top: 2px;
+    color: gray;
+    text-align: center;
+}
+
+#footer a {
+    /*text-decoration: none;*/
+    color: gray;
+}
+
+#content {
+    width: 662px;
+    float: left;
+}
+
+#realContent {
+    min-height: 600px;
+}
+
+#loginForm {
+    margin: 75px auto 25px;
+    width: 300px;
+}
+
+.applicationPanel {
+    width: 290px;
+    float: left;
+    padding: 7px;
+    margin: 12px 12px 12px 12px;
+    border: 1px outset #E5ECF6;
+    position: relative;
+}
+
+.applicationPanel .authorisationBanner {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+}
+
+.applicationPanel .authorisationBanner img {
+    border: 0;
+
+}
+
+.applicationPanel .topRightButton {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+}
+
+.applicationPanel .topRightButton img {
+    border: none;
+}
+
+.applicationPanel div.logo {
+    width: 62px;
+    height: 62px;
+    overflow: hidden;
+    float: left;
+    margin: 2px 7px 3px 0;
+}
+
+.applicationPanel img.logo {
+    max-width: 75px;
+    max-height: 75px;
+    border: none;
+}
+
+.applicationPanel h1 {
+    margin: 3px;
+    text-align: left;
+}
+
+.applicationPanel h4 {
+    margin: 3px;
+    text-align: left;
+}
+
+.applicationPanel div.description {
+    margin: 0 0 1px;
+    height: 70px;
+}
+
+.applicationPanel div.description a {
+    text-decoration: none;
+}
+
+.applicationPanel div.description p {
+    margin: 0;
+    height: 13px;
+}
+
+.applicationPanel div.description p, h1, h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+
+.applicationPanel dl.links {
+    border-top: 1px dotted #426bb3;
+    margin-right: 35px;
+}
+
+.applicationPanel dl.links dt {
+    float: right;
+}
+
+.applicationPanel dl.links dd {
+    float: left;
+    padding: 4px 3px 0;
+}
+
+.clickOnApplicationPanel {
+    background-color: white;
+    filter: alpha(opacity = 5);
+    opacity: 0.05;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.addApplication div {
+    border: 2px dashed lightgray;
+    height: 90px;
+    width: 288px;
+    text-align: center;
+}
+
+.addApplication h2 {
+    text-align: center;
+    color: gray;
+}
+
+.addApplication h2:hover {
+    color: #113388;
+}
+
+.newApplicationPanel {
+    cursor: default;
+    float: right;
+    margin-top: -5px;
+    padding-right: 45px;
+    position: relative;
+    text-align: right;
+    width: 100%;
+}
+
+.newApplicationPanel div {
+    float: left;
+    text-align: center;
+    clear: both;
+}
+
+.newApplicationPanel p {
+    color: #113388;
+    font-weight: bold;
+}
+
+.newApplicationPanel img {
+    border: medium none;
+    position: absolute;
+    right: 13px;
+    top: 9px;
+    width: 22px;
+}
+
+body div.wicket-mask-dark {
+    filter: alpha(opacity = 70);
+    opacity: 0.7;
+}
+
+.wihtoutTopMenu {
+    padding-top: 100px;
+}
+
+.launchIcon {
+    float: right;
+    height: 25px;
+}
+
+.launchIcon img {
+    border: none;
+}
+
+#loginForm {
+    position: absolute;
+    top: 140px;
+    left: 342px;
+    width: 510px
+}
+
+#loginForm input[name='username'] {
+    width: 200px;
+}
+
+#loginForm input[name='password'] {
+    width: 200px;
+}
+
+#errorPanel {
+    padding-top: 50px;
+}
+
+/* composant wicket FileUpload */
+#upload {
+    width: 500px;
+}
+
+.downloadLogo img {
+    max-width: 75px;
+    max-height: 75px;
+    border: none;
+    text-align: center;
+}
+
+.adminPanel {
+    padding-top: 20px;
+}
+
+.separateur {
+    border-top: 1px solid #C9D7F1; /* 1px dotted; */
+    font-size: 1px;
+    height: 0;
+    position: absolute;
+    right: 13px;
+    top: 33px;
+    width: 633px; /* 305px; */
+}
+
+.backToHomeLink h2 {
+    text-align: center;
+}
+
+div.explorerTree div.wicket-tree-table-body {
+    height: 48em;
+    overflow: auto;
+}
+
+.centeredFieldset a {
+    text-align: center;
+    padding-left: 55px;
+}
+
+.treeLinkPanel a {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+.ui-datepicker-trigger img {
+    width: 12px;
+}
+
+.brinTable {
+    padding-top: 50px;
+}
+
+.brinForm {
+    padding-top: 50px;
+
+}
+
+#background-image {
+    /*font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;*/
+    font-size: 12px;
+    /*margin: 45px;*/
+    margin-top: 45px;
+    margin-left: 25px;
+    width: 95%;
+    text-align: left;
+    border-collapse: collapse; /*background: url('../images/blurry.jpg') 330px 59px no-repeat;*/
+}
+
+#background-image th {
+    padding: 12px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #339;
+}
+
+#background-image td {
+    padding: 9px 12px;
+    color: #669;
+    border-top: 1px solid #fff;
+}
+
+#background-image tfoot td {
+    font-size: 11px;
+}
+
+#background-image tbody td {
+    background: url('../images/back.png');
+}
+
+* html #background-image tbody td {
+    /*
+        ----------------------------
+         PUT THIS ON IE6 ONLY STYLE
+         AS THE RULE INVALIDATES
+         YOUR STYLESHEET
+        ----------------------------
+     */
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src = '../images/back.png', sizingMethod = 'crop');
+    background: none;
+}
+
+#background-image tbody tr:hover td {
+    color: #339;
+    background: none;
+}
+
+#background-image img.logo {
+    border: none;
+}
+
+.brinDescription {
+    padding-bottom: 10px;
+}
+
+.brinDescription textarea {
+    margin-left: 29px;
+    position: relative;
+    width: 480px;
+}
+
+.affectedTeams {
+    float: right;
+}
+
+.inputDate {
+    float: right;
+}
+
+.inputDate input {
+    margin: 5px;
+    padding: 2px;
+    width: 70px;
+}
+
+.brinStatus {
+    position: absolute;
+    left: 10px;
+    top: 170px;
+}
+
+.fieldSet {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+.fieldSet legend {
+    padding: 2px;
+}
+
+.fieldSet table {
+    margin-left: 10px;
+}
+
+.menuImagLinkLabel {
+    vertical-align: 39%;
+}
+
+.boutonSave {
+    float: right;
+}
+
+.boutonSave img {
+    border: none;
+}
+
+/* Liens du menu*/
+.linkClass:link {
+    text-decoration: none
+}
+
+.linkClass:visited {
+    text-decoration: none
+}
+
+.linkClass:active {
+    text-decoration: none
+}
+
+.linkClass:hover {
+    text-decoration: underline;
+}
+
+/* Feedback Panel*/
+.feedbackPanel {
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 13px;
+    min-height: 25px;
+    visibility: hidden;
+}
+
+.feedbackPanelERROR span {
+    color: green;
+    visibility: visible;
+}
+
+.infoTable {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.infoTable td {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 0px;
+    padding-top: 5px;
+    color: #669;
+}
+
+.fieldSetSummary {
+    position: relative;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 0px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+}
+
+.fieldSetSummary legend {
+    position: absolute;
+    top: -2px;
+    left: 40px;
+    padding-bottom: 5px;
+    color: #339;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.fieldSetSummary table {
+    /*margin-left: 10px;*/
+}
+
+.rightMenuTable {
+    float: right;
+}
