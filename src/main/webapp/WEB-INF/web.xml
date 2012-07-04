@@ -16,9 +16,19 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
+    <servlet>
+        <servlet-name>GithubAuthentServlet</servlet-name>
+        <servlet-class>net.codjo.pyp.servlet.GithubAuthentServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>PypApplication</servlet-name>
         <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>GithubAuthentServlet</servlet-name>
+        <url-pattern>/authent/*</url-pattern>
     </servlet-mapping>
 
     <session-repository>
