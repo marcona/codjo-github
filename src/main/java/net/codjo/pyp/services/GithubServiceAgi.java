@@ -15,7 +15,7 @@ import org.eclipse.egit.github.core.service.RepositoryService;
  */
 public class GithubServiceAgi {
     private String githubLogin = "codjo";
-    private String githubPassword = "$amsung13";
+    private String githubPassword = "XXX";
 
     public static GithubServiceAgi getGithubService(Component wicketComponent) {
         return ((PypApplication)wicketComponent.getApplication()).getBrinService();
