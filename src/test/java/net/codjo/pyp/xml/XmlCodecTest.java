@@ -1,10 +1,13 @@
 package net.codjo.pyp.xml;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import net.codjo.pyp.model.Brin;
 import net.codjo.pyp.model.Team;
 import net.codjo.test.common.XmlUtil;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Assert;
 import org.junit.Test;
 /**
  *
@@ -91,5 +94,52 @@ public class XmlCodecTest {
         String actual = xmlCodec.toXml(xmlCodec.fromXml(expected));
 
         XmlUtil.assertEquivalent(expected, actual);
+    }
+
+
+    @Test
+    public void test_pattern() throws Exception {
+        Pattern pattern = Pattern.compile("\\$([A-Za-z0-9]+)\\$");
+
+        matchons(pattern, "dollar($)", 0);
+        matchons(pattern, "$variable$", 1);
+        matchons(pattern, "dollar($) ha mais j'ai fait expres de mettre $ dans la phrase", 0);
+        matchons(pattern, "dollar($vraiVariable$) dans la phrase", 1);
+        matchons(pattern, "dollar($vraiVa2riable$) dans la phrase", 1);
+        matchons(pattern, "dollar($vraiVa 2riable$) dans la phrase", 0);
+        matchons(pattern, "dollar($vraiVariable$$deuxiemeVariable$) dans la phrase", 2);
+        matchons(pattern, "dollar($vraiVariable$$deuxiemeVariable) dans la phrase", 1);
+        matchons(pattern, "dollar($vraiVariable$a$deuxiemeVariable$) dans la phrase", 2);
+        matchons(pattern, "dollar($$) dans la phrase", 0);
+    }
+
+    private void matchons(Pattern pattern, String textToAnalyse, int expected) {
+        System.out.println("-----------  textToAnalyse = " + textToAnalyse);
+        Matcher matcher = pattern.matcher(textToAnalyse);
+
+        int actual = 0;
+
+        while (matcher.find()) {
+            actual++;
+            System.out.println("found : " + matcher.group());
+        }
+        Assert.assertEquals(expected, actual);
+    }
+
+
+    @Test
+    public void test_rez() throws Exception {
+        Pattern compile = Pattern.compile("\\$([A-Za-z]+)*\\$");
+
+        String input="dhsf$ddd$$dadd$sqddqqdq";
+         input="dhsf$sdsdsd";
+        Matcher matcher = compile.matcher(input);
+        
+        while (matcher.find()){
+            System.out.println("matcher.group() = " + matcher.group());
+        }
+        
+        Assert.assertTrue(matcher.matches());
+        System.out.println("compile.matcher(input).matches() = " + matcher.groupCount());
     }
 }

@@ -82,12 +82,14 @@ public class PypApplication extends WebApplication {
         System.setProperty("http.proxyPort", "80");
         System.setProperty("https.proxyHost", "ehttp1");
         System.setProperty("https.proxyPort", "80");
+        System.setProperty("http.nonProxyHosts", "localhost|127.0.0.1");
+        System.setProperty("http.proxySet", "true");
 
         Authenticator.setDefault(new Authenticator() {
             @Override
             public PasswordAuthentication getPasswordAuthentication() {
                 if (getRequestorType() == RequestorType.PROXY) {
-                    return new PasswordAuthentication("GROUPE\\MARCONA", "XXXXXX".toCharArray());
+                    return new PasswordAuthentication("GROUPE\\MARCONA", "XXXXXXX".toCharArray());
                 }
                 else {
                     return super.getPasswordAuthentication();

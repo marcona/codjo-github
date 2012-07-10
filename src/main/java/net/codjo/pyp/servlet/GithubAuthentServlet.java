@@ -1,15 +1,20 @@
 package net.codjo.pyp.servlet;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Date;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
 /**
  *
@@ -43,96 +48,109 @@ public class GithubAuthentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
 
-        File file = null;
+        response.setContentType("text/plain");
+        response.addDateHeader("Last-Modified", System.currentTimeMillis());
 
-        if (file.exists() && file.isFile()) {
-            if (hasBeenUpdated(request, file)) {
-                response.setContentLength((int)file.length());
-                response.setContentType("text/xml");
-                response.addDateHeader("Last-Modified", new Date(System.currentTimeMillis()));
+        PrintWriter outWriter = null;
+        try {
 
-                OutputStream out = response.getOutputStream();
-                try {
-                    InputStream in = new BufferedInputStream(new FileInputStream(file));
-                    try {
-                        int nread;
-                        byte[] buffer = new byte[(int)file.length()];
-                        while ((nread = in.read(buffer)) > 0) {
-                            out.write(buffer, 0, nread);
-                        }
-                    }
-                    finally {
-                        in.close();
-                    }
-                }
-                finally {
-                    out.close();
-                }
+            HttpClient httpClient = initHttpClient(new ProxyInformation("ehttp1", 80, "GROUPE\\MARCONA", "XXXXX"));
+//            GetMethod getCode= new GetMethod("https://github.com/login/oauth/authorize");
+//            httpClient.getState().setCredentials(AuthScope.ANY, new UsernamePasswordCredentials("marcona","jmdp1FS2"));
+//            getCode.getParams().setParameter("client_id","cfd3e56a5d608efc0801");
+//            executeAndTraceResponse(httpClient, getCode);
+
+            PostMethod getTokenMethod = new PostMethod(GITHUB_AUTHENTICATION_URL);
+            getTokenMethod.addParameter("client_id", "cfd3e56a5d608efc0801");
+            getTokenMethod.addParameter("client_secret", "34f47910ac8d08da7a08a30952cec817b7898165");
+            getTokenMethod.addParameter("code", request.getParameter("code"));
+//            getTokenMethod.setRequestEntity(new StringRequestEntity("", "application/xml", "utf-8"));
+            String responseResult = executeAndTraceResponse(httpClient, getTokenMethod);
+            System.out.println("responseResult = " + responseResult);
+
+            Pattern p = Pattern.compile(".*access_token=(.*)&.*");
+            Matcher m = p.matcher(responseResult);
+            String accessToken = "";
+            if (m.find()) {
+                accessToken = m.group(1);
             }
-            else {
-                response.sendError(HttpServletResponse.SC_NOT_MODIFIED);
-            }
+//
+//            GitHubClient client = new GitHubClient();
+//            client.setCredentials("marcona", "XXXXXXXXXXXXXXX");
+//            UserService service = new UserService(client);
+//            List<Key> keys = service.getKeys();
+
+            outWriter = response.getWriter();
+            StringBuilder builder = new StringBuilder("{\"code\":\"").append(accessToken).append("\"}");
+            String result = builder.toString();
+            System.out.println("result = " + result);
+            outWriter.println(result);
         }
-        else {
-            handleFileDoesNotExist(response, file);
+        finally {
+            outWriter.close();
         }
     }
 
 
     @Override
-    protected long getLastModified(HttpServletRequest req) {
-        File localeFile = null;
-        if (localeFile != null && localeFile.exists()) {
-            return getLastModified(localeFile);
-        }
-        return super.getLastModified(req);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+        doGet(request, response);
     }
 
 
-    private long getLastModified(File file) {
-        long lastModified = file.lastModified();
-        if (lastModified == 0) {
-            return -1;
+    private HttpClient initHttpClient(ProxyInformation proxy) {
+        HttpClient client = new HttpClient();
+        client.getParams().setParameter("http.useragent", "Test Client");
+
+        if (proxy != null) {
+            client.getHostConfiguration().setProxy(proxy.getProxyHost(), proxy.getProxyPort());
+            client.getState()
+                  .setProxyCredentials(null, proxy.getProxyHost(), new UsernamePasswordCredentials(proxy.getProxyUser(),
+                                                                                                   proxy.getProxyPassword()));
+            client.getState().setAuthenticationPreemptive(true);
         }
-        return lastModified;
+        return client;
     }
 
 
-    @SuppressWarnings({"NestedAssignment"})
-    protected void download(HttpServletResponse response, String mimeType, File file) throws IOException {
-
-        response.setContentLength((int)file.length());
-        response.setContentType(mimeType);
-        response.addDateHeader("Last-Modified", getLastModified(file));
-
-        OutputStream out = response.getOutputStream();
+    private String executeAndTraceResponse(HttpClient client, HttpMethod getMethod) throws IOException {
         try {
-            InputStream in = new BufferedInputStream(new FileInputStream(file));
-            try {
-                int nread;
-                byte[] buffer = new byte[(int)file.length()];
-                while ((nread = in.read(buffer)) > 0) {
-                    out.write(buffer, 0, nread);
-                }
+            int returnCode = client.executeMethod(getMethod);
+
+            if (returnCode == HttpStatus.SC_NOT_IMPLEMENTED) {
+                System.err.println("The Post method is not implemented by this URI");
+                // still consume the response body
+                return getMethod.getResponseBodyAsString();
             }
-            finally {
-                in.close();
+            else {
+                return readResponseStream(getMethod.getResponseBodyAsStream());
             }
         }
         finally {
-            out.close();
+            getMethod.releaseConnection();
         }
     }
 
 
-    protected void handleFileDoesNotExist(HttpServletResponse response, File file) throws IOException {
-        logger.info("Unknown file : " + file.getName());
-        response.sendError(HttpServletResponse.SC_NOT_FOUND);
-    }
-
-
-    private boolean hasBeenUpdated(HttpServletRequest request, File file) {
-        long ifModifiedSince = request.getDateHeader("If-Modified-Since");
-        return ifModifiedSince / 1000 * 1000 < getLastModified(file) / 1000 * 1000;
+    private String readResponseStream(InputStream responseBodyAsStream) throws IOException {
+        BufferedReader br = null;
+        StringBuilder builder = new StringBuilder();
+        try {
+            br = new BufferedReader(new InputStreamReader(responseBodyAsStream));
+            String readLine;
+            while (((readLine = br.readLine()) != null)) {
+                builder.append(readLine).append("\n");
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (br != null) {
+                br.close();
+            }
+        }
+        return builder.toString();
     }
 }
